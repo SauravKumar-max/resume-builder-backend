@@ -7,8 +7,6 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const mySecret = process.env['secret']
 
-
-
 router.route('/')
 .get(authVerify, async (req, res) => {
 	try{
@@ -46,7 +44,7 @@ router.route('/login')
 		if(userInfo){
 			bcrypt.compare(password, userInfo.password, function(err, result){
 				if(result){
-					const token = jwt.sign({userId: userInfo._id}, mySecret, {expiresIn: "24hr"})
+					const token = jwt.sign({userId: userInfo._id}, mySecret)
 					return res.json({ email, token });
 				} return res.status(403).json({ success: false, message: "incorrect password", err})
 			})

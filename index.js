@@ -6,8 +6,11 @@ const { initializeDBConnection } = require("./db/db.connect");
 const pageNotFound = require('./middleware/pageNotFound');
 const internalSeverError = require('./middleware/internalServerError');
 const userRouter = require('./routes/user.route');
+const analyserRouter = require('./routes/analyser.route');
+const authVerify = require('./middleware/authVerify');
 
 const app = express();
+
 app.use(cors());
 app.use(bodyParser.json())
 
@@ -18,6 +21,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/user', userRouter);
+app.use('/analyser', authVerify, analyserRouter);
 
 // ** Note: DO NOT MOVE (This should be last Route) **
 
